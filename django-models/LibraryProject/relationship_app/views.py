@@ -4,7 +4,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from .models import Book
 from django.views.generic.detail import DetailView
 from .models import Library
-from django.contrib.auth import login
+from django.contrib.auth.decorators import user_passes_test
+from .models import UserProfile
 
 # Create your views here.
 ''' function based view '''
@@ -35,3 +36,40 @@ class CustomLoginView(LoginView):
 # Custom LogoutView to use our logout.html template
 class CustomLogoutView(LogoutView):
     template_name = "relationship_app/logout.html"
+
+
+def is_admin(user):
+    if user.is_authenticated:
+        try:
+            return user.userprofile.role == 'Admin'
+        except UserProfile.DoesNotExist:
+            return False
+    return False
+
+def is_librarian(user):
+    if user.is_authenticated:
+        try:
+            return user.userprofile.role == 'Librarian'
+        except UserProfile.DoesNotExist:
+            return False
+    return False
+
+def is_member(user):
+    if user.is_authenticated:
+        try:
+            return user.userprofile.role == 'Member'
+        except UserProfile.DoesNotExist:
+            return False
+    return False
+
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, 'admin_view.html')
+
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'librarian_view.html')
+
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'member_view.html')
