@@ -24,6 +24,12 @@ def get_librarian_of_library(library_name):
         return library.librarian if library.librarian else "No librarian assigned."
      except ObjectDoesNotExist:
          return f"Library '{library_name}' not found."
+def get_librarian_of_library(library_name):
+    try:
+        librarian = Librarian.objects.get(library__name=library_name)
+        return librarian
+    except ObjectDoesNotExist:
+        return f"No librarian found for library '{library_name}'."
     
 
 if __name__ == "__main__":
