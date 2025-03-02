@@ -4,6 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from .models import Book
 from django.views.generic.detail import DetailView
 from .models import Library
+from django.contrib.auth import login
 
 # Create your views here.
 ''' function based view '''
