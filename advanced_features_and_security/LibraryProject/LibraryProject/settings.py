@@ -11,6 +11,27 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+SECURE_BROWSER_XSS_FILTER = True  # Enables browser XSS filtering
+X_FRAME_OPTIONS = 'DENY'  # Prevents Clickjacking attacks
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents MIME-type sniffing
+
+# Secure cookies
+CSRF_COOKIE_SECURE = True  # Ensures CSRF cookie is sent over HTTPS only
+SESSION_COOKIE_SECURE = True  # Ensures session cookie is sent over HTTPS only
+
+# Content Security Policy (CSP) - If using django-csp
+INSTALLED_APPS += ['csp']
+CSP_DEFAULT_SRC = ("'self'",)  # Restrict loading content to the same origin
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'")  # Adjust as needed
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
+CSP_IMG_SRC = ("'self'", "data:")
+
+# Middleware
+MIDDLEWARE += [
+    'csp.middleware.CSPMiddleware',
+]
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'path.to.ContentSecurityPolicyMiddleware',
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
