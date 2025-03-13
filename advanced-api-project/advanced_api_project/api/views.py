@@ -7,11 +7,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny] 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['author', 'genre']
-
-
+    filterset_fields = ['author', 'genre'] # Public access
 
 # DetailView: Retrieve a single book by ID
 class BookDetailView(generics.RetrieveAPIView):
@@ -36,6 +34,3 @@ class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]  # Only authenticated users
-
-
-
