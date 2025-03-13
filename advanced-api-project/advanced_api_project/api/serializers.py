@@ -11,7 +11,11 @@ class BookSerializer(serializers.ModelSerializer):
         if value > current_year:
             raise serializers.ValidationError("Publication year cannot be in the future.")
         return value
-
+    def validate_title(self, value):
+        """Ensure the title is not empty and at least 3 characters long."""
+        if len(value) < 3:
+            raise serializers.ValidationError("Title must be at least 3 characters long.")
+        return value
     class Meta:
         model = Book
         fields = '__all__'
