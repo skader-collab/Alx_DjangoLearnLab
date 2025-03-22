@@ -3,12 +3,22 @@ from rest_framework.exceptions import PermissionDenied
 from .models import Book
 from .serializers import BookSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
+        # Filtering
+    filterset_fields = ['title', 'author', 'publication_year']
+    
+    
+    search_fields = ['title', 'author']
+    
+
+    ordering_fields = ['title', 'publication_year']
+    ordering = ['title']  
     
 
     def perform_create(self, serializer):
