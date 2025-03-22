@@ -8,6 +8,8 @@ from api.models import Book
 class BookAPITestCase(TestCase):
     def setUp(self):
         """Set up test data and API client."""
+
+        self.client.login(username="testuser", password="testpassword")
         self.client = APIClient()
         self.book1 = Book.objects.create(title="Book One", author="Author A", publication_year=2021)
         self.book2 = Book.objects.create(title="Book Two", author="Author B", publication_year=2022)
