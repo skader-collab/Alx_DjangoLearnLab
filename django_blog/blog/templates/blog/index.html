@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h1>
+    welcome to our blog page
+</h1>
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">User name</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <button type="submit" class="btn btn-Secondary">Log In</button>
+  </form>
+{% endblock %}
