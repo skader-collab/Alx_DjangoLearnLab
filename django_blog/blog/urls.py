@@ -8,6 +8,7 @@ from .views import (
     PostUpdateView,
     PostDeleteView,
 )
+from . import views
 
 
 urlpatterns = [
